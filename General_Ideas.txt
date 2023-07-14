@@ -1,0 +1,7 @@
+
+
+GENERAL NOTES
+
+    COMBAT
+        1.  all fighters have x seconds to lock in their combat decision, then it all goes at once
+            a. players can use a bonus action to change or add another action to their turn, which happens after all players enact their action
