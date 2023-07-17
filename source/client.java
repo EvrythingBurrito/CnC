@@ -53,8 +53,6 @@ class GM_client {
             player.start();
         }
 
-        // get initial region, area, landmark
-
         // state shift
         state curState = initialState;
         while (true) {

@@ -5,3 +5,25 @@ GENERAL NOTES
     COMBAT
         1.  all fighters have x seconds to lock in their combat decision, then it all goes at once
             a. players can use a bonus action to change or add another action to their turn, which happens after all players enact their action
+
+    UI
+        region screen (world map) - active when party is traveling between areas
+            will not be shown much - think between huge events
+            gives options of which regions can be traveled to based on current location within a region
+            gives basic description of what party knows about a selected region
+            HAS NOTHING TO DO WITH ENCOUNTERS
+
+        area screen (main map) - active when party is traveling between landmarks
+            shown often after party completes encounter and leaves landmark to continue their journey
+            gives options for which landmarks can be traveled to based on current landmark location within the area
+                will give an approximation of travel time, distance, difficulty, things the party knows to look out for, etc
+                can select a landmark for travel
+                    will decide based on a dice roll if a travel encounter is tripped
+                    will construct intermediate landmarks if a travel encounter is necessary
+            gives basic description of what happened at a landmark and what the party knows about landmarks in general
+            gives info about what encounters could be drawn in the area
+
+        landmark screen
+            gives description of immediate surroundings
+            allows for players to look around, may have loot, secrets, etc
+            gives current progress on encounter if an encounter is active

@@ -15,6 +15,7 @@ class game_environment {
         // load gamedata associated with mode from database
         // initialize mode menu
         
+
     }
 
 };
