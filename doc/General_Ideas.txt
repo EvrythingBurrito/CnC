@@ -1,0 +1,42 @@
+
+
+thug raymond
+
+
+GENERAL NOTES
+
+    COMBAT
+        2 actions per turn
+            offensive move (sword technique(more than just a swing), spell, shoot a bow(options for speed, strength, accuracy etc. - depending on the type of bow))
+            defensive prep (tank("raise shield"), dodge("sheath weapon(s)"), parry("raise weapon"))
+            move (step(half movement, advantage against swipes - opportunity atks), stride(normal movement))
+            item (use potion, throw bomb, etc.)
+            interact (turn crank, flip table, cut rope, etc.)
+        Notes:
+            some of each category may cost a whole turn, or 2 actions
+            you can do anything twice except defense prep
+            side actions like ducking behind cover take no actions
+        Attack metrics:
+            splash (number of targets), damage (per target), status effect, range, accuracy, prerequisites (having to load the crossbow), cost (stamina or mana)
+
+    UI
+        region screen (world map) - active when party is traveling between areas
+            will not be shown much - think between huge events
+            gives options of which regions can be traveled to based on current location within a region
+            gives basic description of what party knows about a selected region
+            HAS NOTHING TO DO WITH ENCOUNTERS
+
+        area screen (main map) - active when party is traveling between landmarks
+            shown often after party completes encounter and leaves landmark to continue their journey
+            gives options for which landmarks can be traveled to based on current landmark location within the area
+                will give an approximation of travel time, distance, difficulty, things the party knows to look out for, etc
+                can select a landmark for travel
+                    will decide based on a dice roll if a travel encounter is tripped
+                    will construct intermediate landmarks if a travel encounter is necessary
+            gives basic description of what happened at a landmark and what the party knows about landmarks in general
+            gives info about what encounters could be drawn in the area
+
+        landmark screen
+            gives description of immediate surroundings
+            allows for players to look around, may have loot, secrets, etc
+            gives current progress on encounter if an encounter is active
