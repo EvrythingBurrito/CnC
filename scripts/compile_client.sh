@@ -4,7 +4,7 @@
 
 RUNDIR="$(pwd)/run"
 
- initialize run directory
+# initialize run directory
 if [ ! -d ${RUNDIR} ]; then
     mkdir ${RUNDIR}
 
@@ -18,15 +18,3 @@ fi
 
 # compile client classes
 javac ./source/client/*.java -d ${RUNDIR} -classpath .
-
-cd ${RUNDIR}
-
-java source.client.GM_client
-
-
-# javac ./source/javax/json/*.java -classpath .
-# javac ./source/ConsoleMenu/*.java -classpath .
-# 
-# javac ./source/client/*.java -classpath .
-# 
-# java source.client.GM_client
