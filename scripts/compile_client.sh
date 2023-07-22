@@ -1,24 +1,32 @@
-#!\bin\bash
+#!/bin/bash
 
-# use CnC top as classpath
-CLASSPATH=.
+# use run directory as runtime classpath
 
-RUNDIR="$(pwd)\run"
-SOURCEDIR="$(pwd)\source"
+RUNDIR="$(pwd)/run"
 
-if [ ! -d ${RUNPATH} ]; then
-    mkdir ${RUNPATH}
+ initialize run directory
+if [ ! -d ${RUNDIR} ]; then
+    mkdir ${RUNDIR}
+
+    # compile javax classes
+    javac ./source/javax/json/*.java -d ${RUNDIR} -classpath .
+
+    # compile menu classes
+    javac ./source/ConsoleMenu/*.java -d ${RUNDIR} -classpath .
+
 fi
 
-# compile javax classes 
-if [ ! -d ${RUNPATH}\javax ]; then
-    mkdir ${RUNPATH}\javax\json
-    mkdir ${RUNPATH}\javax\json\spi
-    mkdir ${RUNPATH}\javax\json\stream
-    javac .\source\javax\json\*.java -d ${RUNPATH}\javax\json
-    javac .\source\javax\json\spi\*.java -d ${RUNPATH}\javax\json\spi
-    javac .\source\javax\json\stream\*.java -d ${RUNPATH}\javax\json\stream
-fi
+# compile client classes
+javac ./source/client/*.java -d ${RUNDIR} -classpath .
 
-# compile menu classes
-if [ ! -d ${RUNPATH}]
+cd ${RUNDIR}
+
+java source.client.GM_client
+
+
+# javac ./source/javax/json/*.java -classpath .
+# javac ./source/ConsoleMenu/*.java -classpath .
+# 
+# javac ./source/client/*.java -classpath .
+# 
+# java source.client.GM_client

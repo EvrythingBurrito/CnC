@@ -30,7 +30,7 @@ class GM_client {
     final static String campaignDir = new String("./gamedata/campaigns");
     static Campaign curGame;
 
-    public static void main() { new GM_client().mainMenu(); }
+    public static void main(String[] args) { new GM_client().mainMenu(); }
 
     public void mainMenu() {
         Menu menu = new Menu();
@@ -42,7 +42,6 @@ class GM_client {
     }
 
     public void loadGameMenu() {
-
         Menu menu = new Menu();
 		menu.setTitle("~~ Load Game ~~\n");
 		menu.addItem(new MenuItem("CREATE NEW CAMPAIGN", this, "create_campaign"));
