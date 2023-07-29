@@ -1,0 +1,31 @@
+plugins {
+    id 'application' 
+}
+
+repositories {
+    mavenCentral() 
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2' 
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'com.google.guava:guava:31.1-jre' 
+
+    implementation group: 'javax.json', name: 'javax.json-api', version: '1.0'
+}
+
+application {
+    mainClass = 'client.GM_client' 
+}
+
+// allow command line interface for debug
+run {
+    standardInput = System.in
+    workingDir = "./runtime"
+}
+
+tasks.named('test') {
+    useJUnitPlatform() 
+}
