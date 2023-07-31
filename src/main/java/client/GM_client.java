@@ -4,6 +4,7 @@ import java.util.stream.*;
 import java.io.*;
 import javax.json.*;
 import ConsoleMenu.*;
+import com.google.gson.Gson;
 
 // class player_client extends Thread {
 //     public void run() {
@@ -28,7 +29,7 @@ import ConsoleMenu.*;
 public class GM_client {
 
     // run directory is /CnC/run
-    final static String campaignDir = new String("./runtime/gamedata/campaigns");
+    final static String campaignDir = new String("./gamedata/campaigns");
     Campaign curCampaign;
 
     public static void main(String[] args) { new GM_client().mainMenu(); }
@@ -39,8 +40,11 @@ public class GM_client {
 		menu.addItem(new MenuItem("CREATE NEW CAMPAIGN", this, "createCampaign", null));
 		menu.addItem(new MenuItem("LOAD CAMPAIGN", this, "loadGameMenu", null));
         menu.addItem(new MenuItem("SAVE CAMPAIGN", this, "saveGameMenu", null));
+        menu.addItem(new MenuItem("EDIT CAMPAIGN", this, "modifyCampaign", null));
 		menu.execute();
     }
+
+    // Utility - create game ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public void createCampaign() {
         Campaign aCampaign = new Campaign();
@@ -51,20 +55,24 @@ public class GM_client {
         curCampaign = aCampaign;
     }
 
+    // Utility - load game ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public void loadGameMenu() {
         Menu menu = new Menu();
 		menu.setTitle("\n\n~~ Load Game ~~\n");
         // read "name" attributes in all json files in campaign directory
         List<JsonObject> campaignJsons = getJSONInDirectory(campaignDir);
-        for (int i = 0; i < campaignJsons.size(); i++) {
-                menu.addItem(new MenuItem(campaignJsons.get(i).getString("name"), this, "loadGame", campaignJsons.get(i)));
-        }
+        campaignJsons.forEach(json -> {menu.addItem(new MenuItem(json.getString("name"), this, "loadGame", json.toString()));});
 		menu.execute();
     }
 
-    public void loadGame(JsonObject gameJson) {
-        
+    public void loadGame(String jsonString) {
+        curCampaign = new Campaign();
+        Gson gson = new Gson();
+        curCampaign = gson.fromJson(jsonString, curCampaign.getClass());
     }
+
+    // Utility - save game ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public void saveGameMenu() {
 		System.out.println("\n\n~~ Save Current Game : " + curCampaign.name + " ~~\n");
@@ -96,13 +104,27 @@ public class GM_client {
         ConsoleUtils.pauseExecution();
     }
 
+    // Utility - modify game ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void modifyCampaign() {
+        Menu menu = new Menu();
+		menu.setTitle("\n\n~~ Modify Campaign: \"" + curCampaign.name + "\" ~~\n");
+        menu.addItem(new MenuItem("edit campaign regions", curCampaign, "modifyRegions", null));
+        menu.addItem(new MenuItem("edit campaign name/description", curCampaign, "modifySelf", null));
+        menu.execute();
+    }
+
+    // Utility - Misc ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public List<JsonObject> getJSONInDirectory(String dir) {
         List<JsonObject> jsonList = new ArrayList<JsonObject>();
-        Set<String> jsonNames = listJSONInDirectory(dir);
+        // FIXME: adding non-json files to campaign directory will cause issues
+        Set<String> jsonNames = listFileInDirectory(dir);
         Iterator<String> it = jsonNames.iterator();
         while (it.hasNext()) {
             try {
-                InputStream fis = new FileInputStream(it.next());
+                String curFile = new String(dir + "/" + it.next());
+                InputStream fis = new FileInputStream(curFile);
                 JsonReader jsonReader = Json.createReader(fis);
                 jsonList.add(jsonReader.readObject());
                 fis.close();
@@ -113,11 +135,11 @@ public class GM_client {
         return jsonList;
     }
 
-    public Set<String> listJSONInDirectory(String dir) {
+    public Set<String> listFileInDirectory(String dir) {
     return Stream.of(new File(dir).listFiles())
       .filter(file -> !file.isDirectory())
-      .filter(file -> file.getName().matches("*.json"))
       .map(File::getName)
       .collect(Collectors.toSet());
     }
+    
 }

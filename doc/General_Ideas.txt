@@ -84,3 +84,7 @@ GENERAL NOTES
             player characters are brought back from the dead by a curse that someone in their previous life had laid upon them
 
             The curse allows a necromancer to force them into his service - namely that of traveling to and dispatching his enemies for him
+
+    IMPLEMENTATION
+        create a directory structure for campaigns, regions, areas, landmarks, encounters, objects, all assets in /gamedata/assets
+        -> have an option to import game assets to current campaign datatype in edit menus

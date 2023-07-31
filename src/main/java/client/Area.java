@@ -2,6 +2,9 @@
 package client;
 import java.util.*;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+
 import ConsoleMenu.*;
 
 /* AREA CLASS
@@ -20,7 +23,7 @@ public class Area {
     private List<Landmark> discoveredLandmarks;
     private List<Landmark> allLandmarks;
     Landmark curLandmark;
-    List<Encounter> encounterDeck;
+    public List<Encounter> encounterDeck;
 
     // constructors //////////////////////////////////////////////////////////////////////
 
@@ -28,6 +31,7 @@ public class Area {
         this.name = new String();
         this.curLandmark = new Landmark();
         this.discoveredLandmarks = new ArrayList<Landmark>();
+        this.allLandmarks = new ArrayList<Landmark>();
         this.encounterDeck = new ArrayList<Encounter>();
     }
 
@@ -35,6 +39,7 @@ public class Area {
         this.name = new String();
         this.curLandmark = initialLandmark;
         this.discoveredLandmarks = new ArrayList<Landmark>();
+        this.allLandmarks = new ArrayList<Landmark>();
         this.discoveredLandmarks.add(curLandmark);
         this.encounterDeck = initialEncounterDeck;
     }
@@ -46,18 +51,18 @@ public class Area {
     public void modifyLandmarks() {
         Menu menu = new Menu();
 		menu.setTitle("~~Available Landmarks~~");
-		for (int i = 0; i < allLandmarks.size(); i++) {
-			String name = new String(allLandmarks.get(i).name);
-			menu.addItem(new MenuItem(name, this, "modifyLandmark", allLandmarks.get(i)));
-		}
-		menu.addItem(new MenuItem("new Landmark", this, "createLandmark", null));
+        // option to create new area
+        menu.addItem(new MenuItem("new Landmark", this, "createLandmark", null));
+		// list all discovered areas to edit
+		allLandmarks.forEach(landmark -> {menu.addItem(new MenuItem(landmark.name, this, "modifyLandmark", landmark));});
+        menu.execute();
     }
 
     public void modifyLandmark(Landmark aLandmark) {
 		Menu menu = new Menu();
 		menu.setTitle("Modify: " + aLandmark.name);
-		menu.addItem(new MenuItem("Edit Landmark Name", aLandmark, "modifyName", null));
-		// menu.addItem(new MenuItem("Edit Landmarks", anLandmark, "modifyLandmarks"));
+		menu.addItem(new MenuItem("Edit name/description/encounter", aLandmark, "modifySelf", null));
+        menu.execute();
 	}
 
 	public void createLandmark() {
@@ -71,10 +76,18 @@ public class Area {
 
     // utility - Modify self //////////////////////////////////////////////////////////////////////
 
-    public void modifyName() {
-        System.out.println("new area name:");
-		this.name = ConsoleUtils.getStringResponse();
-    }
+    public void modifySelf() {
+		System.out.println("New name: (default: \"" + this.name + "\")");
+		String response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.name = response;
+		}
+		System.out.println("New description: (default: \"" + this.description + "\")");
+		response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.description = response;
+		}
+	}
 
     // utility - Run //////////////////////////////////////////////////////////////////////
 
@@ -95,4 +108,18 @@ public class Area {
         return;
     }
 
+    // utility - create area jsonbuilder //////////////////////////////////////////////////////////////////////
+    public JsonObjectBuilder getBuilder() {
+        // create json object builder for area
+		JsonObjectBuilder gameJsonBuilder = Json.createObjectBuilder();
+		gameJsonBuilder.add("name", this.name);
+		gameJsonBuilder.add("description", this.description);
+        if (allLandmarks.size() > 0) {
+		    allLandmarks.forEach(landmark -> {gameJsonBuilder.add(landmark.name, landmark.getBuilder());});
+        }
+        if (encounterDeck.size() > 0) {
+            encounterDeck.forEach(encounter -> {gameJsonBuilder.add(encounter.name, encounter.getBuilder());});
+        }
+		return gameJsonBuilder;
+	}
 }

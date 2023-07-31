@@ -47,13 +47,12 @@ public class MenuItem {
 	 */
 	void invoke() {
 		if (target == null) return;
-		
 		try {
-			Method method = obj.getClass().getMethod(target);
-			System.out.println(target);
 			if (arg == null) {
+				Method method = obj.getClass().getMethod(target);
 				method.invoke(obj);
 			} else {
+				Method method = obj.getClass().getMethod(target, arg.getClass());
 				method.invoke(obj,arg);
 			}
 		}

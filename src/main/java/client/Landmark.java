@@ -1,10 +1,15 @@
 
 package client;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+
+import ConsoleMenu.ConsoleUtils;
+
 public class Landmark {
     public String name;
     public String description;
-    // encounter will change or even not exist
+    // encounter can change or even not exist
     Encounter currentEncounter;
 
     // constructors //////////////////////////////////////////////////////////////////////
@@ -27,10 +32,6 @@ public class Landmark {
 
     // utility //////////////////////////////////////////////////////////////////////
 
-    public void setDescription() {
-        // menu to update landmark description
-    }
-
     public void runCurrentEncounter() throws Exception {
         if (currentEncounter != null) {
             // play encounter (combat, npc, whatever)
@@ -39,4 +40,27 @@ public class Landmark {
             throw new Exception("Landmark has no active encounters");
         }
     }
+
+    // utility - modify self //////////////////////////////////////////////////////////////////////
+    public void modifySelf() {
+		System.out.println("New name: (default: \"" + this.name + "\")");
+		String response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.name = response;
+		}
+		System.out.println("New description: (default: \"" + this.description + "\")");
+		response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.description = response;
+		}
+	}
+
+    // utility - create landmark jsonbuilder //////////////////////////////////////////////////////////////////////
+    public JsonObjectBuilder getBuilder() {
+        // create json object builder for area
+		JsonObjectBuilder gameJsonBuilder = Json.createObjectBuilder();
+		gameJsonBuilder.add("name", this.name);
+		gameJsonBuilder.add("description", this.description);
+		return gameJsonBuilder;
+	}
 }

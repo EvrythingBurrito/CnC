@@ -2,6 +2,9 @@
 package client;
 import java.util.*;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+
 import ConsoleMenu.*;
 
 /* REGION CLASS
@@ -27,16 +30,18 @@ public class Region {
     public Region () {
         this.name = new String();
         this.description = new String();
-        curArea = new Area();
-        discoveredAreas = new ArrayList<Area>();
+        this.curArea = new Area();
+        this.discoveredAreas = new ArrayList<Area>();
+        this.allAreas = new ArrayList<Area>();
     }
 
     public Region (Area initialArea) {
         this.name = new String();
         this.description = new String();
-        curArea = initialArea;
-        discoveredAreas = new ArrayList<Area>();
-        discoveredAreas.add(curArea);
+        this.allAreas = new ArrayList<Area>();
+        this.curArea = initialArea;
+        this.discoveredAreas = new ArrayList<Area>();
+        this.discoveredAreas.add(curArea);
     }
 
     // Main menu //////////////////////////////////////////////////////////////////////
@@ -46,18 +51,19 @@ public class Region {
     public void modifyAreas() {
         Menu menu = new Menu();
 		menu.setTitle("~~Available Areas~~");
-		for (int i = 0; i < discoveredAreas.size(); i++) {
-			String name = new String(discoveredAreas.get(i).name);
-			menu.addItem(new MenuItem(name, this, "modifyArea", discoveredAreas.get(i)));
-		}
-		menu.addItem(new MenuItem("new Area", this, "createArea", null));
+        // option to create new area
+        menu.addItem(new MenuItem("new Area", this, "createArea", null));
+		// list all discovered areas to edit
+		allAreas.forEach(area -> {menu.addItem(new MenuItem(area.name, this, "modifyArea", area));});
+        menu.execute();
     }
 
     public void modifyArea(Area anArea) {
 		Menu menu = new Menu();
 		menu.setTitle("Modify: " + anArea.name);
-		menu.addItem(new MenuItem("Edit Area Name", anArea, "setName", null));
-		menu.addItem(new MenuItem("Edit Areas", anArea, "modifyLandmarks", null));
+		menu.addItem(new MenuItem("Edit Landmarks", anArea, "modifyLandmarks", null));
+        menu.addItem(new MenuItem("Edit Area name/description", anArea, "modifySelf", null));
+        menu.execute();
 	}
 
 	public void createArea() {
@@ -71,9 +77,29 @@ public class Region {
 
     // utility - Modify self //////////////////////////////////////////////////////////////////////
 
-    public void modifyName() {
-        System.out.println("new region name:");
-		this.name = ConsoleUtils.getStringResponse();
-    }
+    public void modifySelf() {
+		System.out.println("New name: (default: \"" + this.name + "\")");
+		String response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.name = response;
+		}
+		System.out.println("New description: (default: \"" + this.description + "\")");
+		response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.description = response;
+		}
+	}
+
+    // utility - create region jsonbuilder //////////////////////////////////////////////////////////////////////
+    public JsonObjectBuilder getBuilder() {
+        // create json object builder for area
+		JsonObjectBuilder gameJsonBuilder = Json.createObjectBuilder();
+		gameJsonBuilder.add("name", this.name);
+		gameJsonBuilder.add("description", this.description);
+        if (allAreas.size() > 0) {
+		    allAreas.forEach(area -> {gameJsonBuilder.add(area.name, area.getBuilder());});
+        }
+		return gameJsonBuilder;
+	}
 
 }

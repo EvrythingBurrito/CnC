@@ -1,8 +1,5 @@
 package client;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import ConsoleMenu.*;
 import javax.json.*;
@@ -24,6 +21,7 @@ public class Campaign {
 		name = new String();
 		description = new String("new game");
 		discoveredRegions = new ArrayList<Region>();
+		allRegions = new ArrayList<Region>();
 		curRegion = new Region();
 	}
 
@@ -31,6 +29,8 @@ public class Campaign {
         name = new String(aName);
 		description = new String("new game");
 		discoveredRegions = new ArrayList<Region>();
+		allRegions = new ArrayList<Region>();
+		curRegion = new Region();
     }
 
 	// Main menu //////////////////////////////////////////////////////////////////////
@@ -43,27 +43,24 @@ public class Campaign {
 		menu.execute();
 	}
 
-//	public void modifyEncounterDecks() {
-//
-//	} 
-
 	// utility - Modify Regions //////////////////////////////////////////////////////////////////////
 
 	public void modifyRegions() {
 		Menu menu = new Menu();
-		menu.setTitle("~~Available Regions~~");
-		for (int i = 0; i < discoveredRegions.size(); i++) {
-			String name = new String(discoveredRegions.get(i).name);
-			menu.addItem(new MenuItem(name, this, "modifyRegion", discoveredRegions.get(i)));
-		}
-		menu.addItem(new MenuItem("new Region", this, "createRegion", null));
+		menu.setTitle("~~ Edit Regions in Campaign \"" + this.name + "\" ~~");
+		// option to create new region
+		menu.addItem(new MenuItem(" . . . . <New Region>", this, "createRegion", null));
+		// list all discovered regions to edit
+		allRegions.forEach(region -> {menu.addItem(new MenuItem(region.name, this, "modifyRegion", region));});
+		menu.execute();
 	}
 
 	public void modifyRegion(Region aRegion) {
 		Menu menu = new Menu();
 		menu.setTitle("Modify: " + aRegion.name);
-		menu.addItem(new MenuItem("Edit Region Name", aRegion, "setName", null));
 		menu.addItem(new MenuItem("Edit Areas", aRegion, "modifyAreas", null));
+		menu.addItem(new MenuItem("Edit name/description", aRegion, "modifySelf", null));
+		menu.execute();
 	}
 
 	public void createRegion() {
@@ -77,27 +74,34 @@ public class Campaign {
 
 	// utility - Modify self //////////////////////////////////////////////////////////////////////
 
-	public void setCampaignDescription(String aDescription) {
-		this.description = aDescription;
+	public void modifySelf() {
+		System.out.println("New name: (default: \"" + this.name + "\")");
+		String response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.name = response;
+		}
+		System.out.println("New description: (default: \"" + this.description + "\")");
+		response = ConsoleUtils.getStringResponse();
+		if (response != null) {
+			this.description = response;
+		}
 	}
 
-	// utility - save game to json //////////////////////////////////////////////////////////////////////
-
+	// utility - save campaign to json //////////////////////////////////////////////////////////////////////
 	public void saveToDirectory(String aDirectory) {
-		// make a campaign directory, if one doesn't already exist
-		String campaignPathName = new String(aDirectory + "/" + this.name);
-		Path campaignPath = Paths.get(campaignPathName);
-		if (!Files.exists(campaignPath))
-        	new File(campaignPathName).mkdirs();
-		// save all regions to their own jsons
-		// save all characters to their own jsons
+		// save campaign to json
 		JsonObjectBuilder gameJsonBuilder = Json.createObjectBuilder();
 		gameJsonBuilder.add("name", this.name);
 		gameJsonBuilder.add("description", this.description);
 		// . . . . . . . add anything else necessary for campaign
+		// add regions, if any
+		if (allRegions.size() > 0) {
+			allRegions.forEach(region -> {gameJsonBuilder.add(region.name, region.getBuilder());});
+		}
+		// add player characters
 		JsonObject gameJson = gameJsonBuilder.build();
 		 try {
-			OutputStream fos = new FileOutputStream(campaignPathName + "/" + this.name + ".json");
+			OutputStream fos = new FileOutputStream(aDirectory + "/" + this.name + ".json");
 			JsonWriter jsonWriter = Json.createWriter(fos);
 			jsonWriter.writeObject(gameJson);
 			fos.close();
