@@ -1,0 +1,13 @@
+/*
+ * This file has been created by the Vaadin Theme Editor. Please note that
+ * manual changes to individual CSS properties may be overwritten by the theme editor.
+ */
+vaadin-combo-box::part(input-field) {
+  background-color:rgba(47,135,79,0.1);
+  border-color:rgba(186,51,51,0.94);
+  border-radius:var(--lumo-border-radius-l);
+  border-style:solid;
+  border-width:3px;
+}
+
+vaadin-vertical-layout { background-color:rgba(110,31,31,0); }
