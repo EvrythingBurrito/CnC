@@ -1,0 +1,127 @@
+
+
+thug raymond
+
+
+GENERAL NOTES
+
+    COMBAT
+        2 actions per turn - all actions can also be used as a reaction, unless otherwise noted
+            offensive move (sword technique(more than just a swing), spell, shoot a bow(options for speed, strength, accuracy etc. - depending on the type of bow))
+            defensive prep/move (tank("raise shield"), dodge("sheath/lower weapon(s)"), parry("raise weapon")) - using this as a prep action uses far less stamina than as a reaction ("I can't beat the speed of this monster, but I know it's too dumb to not attack my partner while I'm ready to jump in")
+            move (step(half movement, advantage against swipes - opportunity atks), stride(normal movement), sprint (use another action as another stride), adjust stance (focusing attention))
+            item (use potion, throw bomb, etc.)
+            interact (turn crank, flip table, cut rope, etc.)
+        Can spend varying stamina points on a reaction - cost more but are useful for saving you from heavy damage or getting more damage out fast (example: player didn't think they needed to prep a dodge, but since a swing could kill them they spend double the stamina they would've spent to get out of the way on a reaction)
+        Notes:
+            some of each category may cost a whole turn, or 2 actions
+            you can do anything twice except defense prep (no penalty, just pay the extra stamina)
+            side actions like ducking behind cover take no actions, usually less stamina
+        Attack metrics:
+            splash (number of targets), damage (per target), status effect, range, accuracy, prerequisites (having to load the crossbow), cost (stamina or mana or ammunition), speed modifiers
+            Attack speed modifiers:
+                Every attack has a charge time, duration time, and recovery time value. These values determine when reactions can be used within a single interaction
+        Reactions
+            After an attack is validated and initiated, all players with a valid and possible reaction will be asked if they want to make a reaction (can be filtered to line-of-sight, wisdom modified to "see the attack coming", etc.)
+            A reaction is only possible if:
+                the charge and duration time of the reaction is less than the charge time of the action, minus a wisdom-based "instinct" time
+                the reaction move is possible (all costs are met, distance is met, etc.)
+            Example reaction scenario:
+                defender notices the marksman is about to take a big hit from an ogre. The marksman is only 5 feet away, and the defender's wisdom grants them enough instinct time, along with the speed of their movement compared to that of the ogre, to react.
+                The defender also has enough stamina to buy the reaction cost of the tank, which is dependent on the carry weight of the defender, equipped armor, etc. The defender can move 5 feet to the location of the attack (in the case of a melee
+                attack, the defender can choose either to move into the ogre's hex or the defender's hex, provided there is space for them). Some tank moves move the ogre, or the blocker, instead of sharing a hex with either. The defender 
+                chooses to move the ogre's hex, between the ogre's legs. The defender uses their shield to block the ogre's club, but the ogre has a trick up its sleeve, and chooses to pay extra stamina to knee the defender as a counterreaction.
+            Counterreaction - some moves are so quick that they can be used as an action, a reaction, or a counterreaction. While reactions normally take 2x base stamina, counterreactions normally take 3x base stamina.
+                They are often "knee-jerk" reactions such as shove, knee, slap, etc.
+            More advanced reaction scenario:
+                Sorcerer is in a close-encounter with an enemy berserker. There's no help in range and the sorcerer is in a tough spot, but they keep a few defense moves just for this. The berserker starts his turn by
+                taking a step action to get into killing range again, and uses his second action to use one of his short-range handaxe moves. While this move is designed to minimize charge time, the berserker has less than 20% full stamina,
+                and as a result takes a marginal dexterity debuff. That combined with the instinct elixer the sorcerer took a few turns back, and the very fast speed of the next move allows the sorcerer to use
+                arcane thump- a palm-out strike that knocks the berserker back 10 feet and deals a small amount of bludgeoning damage. The sorceror paid 2x mana, but its a cheap spell and it prevented heavy damage.
+
+        Specific Gameplay
+            Stances - you adjust your battle mindset and footing to give yourself different bonuses. For example, Stonefoot grants a bonus to all tanking, and debuff to all dodging.
+            Some stances can only be used with certain equipment. For example, Irongaurd grants a small tank buff and small parry buff to all swords, but can only be used while a heavy armor is equipped.
+
+            Tanking - you move a short distance from your current location and prepare a defense move. You may move 5 feet in any direction from your current position to block
+            an oncoming attack at a much reduced cost. From that position you may move another 5 feet (any direction) to block another attack, and so on until you no longer have
+            enough stamina to buy a block action out of turn
+
+            Dodging - you move a short distance from your current location to prepare to dodge (you put your weapons down to allow for better movement). You may move 15 feet in any direction from your current position to (attempt to) dodge an oncoming
+            attack at a much reduced cost. You may keep doing this until you run out of stamina to buy another.
+
+            Parrying - same as tanking except you risk taking full damage if the parry fails. You can no longer parry out of turn that round if you fail a parry.
+                Some stances allow for more effective parrying with/against specific weapons/damage types (example: Sandfoot stance gives a bonus to parrying with short swords and against two-handed weapons, but debuffs attempts to dodge)
+
+            Adrenaline points - acts as a combat's forward momentum - players earn them by accomplishing main combat goals: killing enemies, saving civilians, venturing deep into enemy territory, etc.
+                Combat goals and adrenaline generation are chosen by players' spirit/religion skill trees
+                IMPLEMENTED IN COMBAT AND ROLEPLAY - REPLACES THE ALIGNMENT CHART
+                examples - 
+                    - boon from the goddess of the hunt: generate adrenaline by repeatedly attacking the same enemy over and over again
+                    - boon from the goddess of love: generate adrenaline by resolving things without killing (incapacitate, persuade or charm in combat - can hold outside of combat)
+                    - boon from the god of strength: generate steady adrenaline when using brute force attacks (rather than finesse, intellect, or spirit)
+                ***each diety has a bunch of boons that are drawn randomly each turn and have varying adrenaline costs (some even constantly consume adrenaline to stay active)
+
+            Three main pillars of combat: - feel free to mix these together! aiming for not needing to pick a specific class, but build a fluid stat block around synergies
+
+                Warrior
+                    berserker - single-target-damage-dominant: uses axes, swords, clubs... uses adrenaline points to get closer to the enemy (jumping, grappling, setting on fire with magic)
+                    defender - defense-dominant: uses spears, hammers, swords... uses adrenaline points to do short range splash damage and knockback
+
+                Rogue
+                    marksman - range-dominant: uses guns, bows, crossbows, throwing knives- also can shoot arrows that have bombs and shit on them... uses adrenaline to bounce and dodge, set up traps, increasing movement speed or probability buffs
+                    assassin - stealth-dominant: uses daggers, poison, hand to hand, brutal magic (including tattoos that have special effects like stone flesh)... uses adrenaline to do very high single target sneak damage, parry attacks, vanish, increasing dodge chance, stealth chance, reduced tattoo mana cost
+
+                Mage
+                    sorceror - splash-damage-dominant: uses tons of mana to cast firey explosions, lightning, hailstorms, etc... uses adrenaline to feed a shifting mana pool- example: fire spells cost 1/5 their normal cost for the next 2 turns (build a character around this by learning a ton of high-cost spells)
+                    scholar - status-effect-dominant: has a very large book of spells that can be prepped each day that do a wide range things: transmutation, slow/haste, teleport, mage-shield... uses adrenaline to unlock higher tier spells
+
+                example: marksman berserker - equip dual hand cannons and a grappling hook to keep chaining together small kills at medium range. Pick god of death to gain adrenaline any time you finish off a foe
+
+                example: defender scholar - equip plate armor and a staff for a mix of mage shield tanking and earthquake staff strikes. Pick goddess of wisdom to gain a fraction of all blocked damage as adrenaline
+
+                example: assassin sorceror - use tons of tattoos like that aid in melee with elemental damage buffs, explode out of stealth with lightning bolts. Pick goddess of shadow to gain a fraction of all stealth damage dealt as adrenaline
+
+    UI
+        region screen (world map) - active when party is traveling between areas
+            will not be shown much - think between huge events
+            gives options of which regions can be traveled to based on current location within a region
+            gives basic description of what party knows about a selected region
+            HAS NOTHING TO DO WITH ENCOUNTERS
+
+        area screen (main map) - active when party is traveling between landmarks
+            shown often after party completes encounter and leaves landmark to continue their journey
+            gives options for which landmarks can be traveled to based on current landmark location within the area
+                will give an approximation of travel time, distance, difficulty, things the party knows to look out for, etc
+                can select a landmark for travel
+                    will decide based on a dice roll if a travel encounter is tripped
+                    will construct intermediate landmarks if a travel encounter is necessary
+            gives basic description of what happened at a landmark and what the party knows about landmarks in general
+            gives info about what encounters could be drawn in the area
+            Areas have default battlemap grids for off the cuff combat encounters and roleplay
+
+        landmark screen
+            Has a default visual screen and battlemap grid for encounters
+                May have different variations of these images for transformations (i.e. rainstorm, after an explosion, destroyed, much later in time like cracked stones and overgrowth)
+            gives description of immediate surroundings
+            allows for players to look around, may have loot, secrets, etc
+            gives current progress on encounter if an encounter is active
+
+    LORE
+        Basic background for player characters:
+            player characters are brought back from the dead by a curse that someone in their previous life had laid upon them
+            The curse allows a necromancer to force them into his service - namely that of traveling to and dispatching his enemies for him
+
+    GAMEPLAY PILLARS - high level objectives for what to do in an area
+        Voyaging - track an objective across the overworld by drawing encounters across the map and uncovering plot through exploration
+            - could be a forest, plains, mountains, etc. 
+            - covering a large distance
+            - combat, resource tracking, survival in nature
+
+        Investigating - stay in a sub-area for a long time to sniff out an objective through NPC interaction and small scale exploration
+            - could be a city, village, cave system, ancient ruins
+            - covering a short distance
+            - combat, roleplay, puzzle solving
+
+    PLAYER STATS & SKILLS - 
+        
