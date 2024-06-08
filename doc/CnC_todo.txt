@@ -1,68 +1,20 @@
 
 CAVES AND COCKATRICES TO DO
 
-################################################################ PHASE 1 ################################################################
-
-
-        GAME PROGRAMMING
-            storyboard the client state machine
-            create gamefile database structure - look into JSON, SQlite, H2 - will be using JSON
-                write serialized data to database file
-                read from database file to plaintext terminal
-            run a terminal-based interactive game session - player
-                load player stats
-                edit player equipment
-                initiate a player action
-                    shop transaction
-                    theft action
-                    combat action
-                    npc interaction
-            run a terminal-based interactive game session - GM
-                run a region encounter state
-                    run an area encounter state
-                        run a combat session
-                        run an npc interaction
-                        run a landmark-specific interaction
-
-
-        RPI SETUP
-            install operating system, connect with peripherals
-            run a simple program to access gpio
-            drive a display
-                display text
-                display a graphic
-            receive button signals - consider touch screen (get a cheap one, play around with it)
-
-
-################################################################ PHASE 2 ################################################################
-
-
-        ESP32 SETUP
-            load a program (blink a light, etc.)
-            drive a display
-                display text
-                display a graphic
-            receive button signals
-
-
-        NETWORKING BETWEEN RPI AND ESP32
-            send display signal to ESP32
-            send button signals to RPI
-
-
-################################################################ PHASE 3 ################################################################
-
-
-        SOLIDIFY RULESET
-
-
-        HOUSING 3D PRINTING
-            finish all wiring
-                make solid wire connections/soldering
-            design cases - fusion 360
-
-
-################################################################ PHASE 4 ################################################################
-
-
-        
+Create the Vaadin/Hibernate web app environment
+    ##### THE BONES
+        finish bones for GM and player main views
+        Explore JavaFX with a standalone application
+            then try to surmise how one can interact with the rest of the vaadin front-end system
+        add NPC, landmark, area, and region objects to fit into the game state with the player objects
+            Need to add region/area/landmark views for the Vaadin GM UI and eventually JavaFX layers to display game state changes (player screens are independent of game state)
+        finish bones for GM game environment states
+            ----> this will probably just look like the GM controlling exactly what state everything is in through their UI login
+            This means GM is able to move the game in and out of different state views and the views update on player UIs accordingly
+    ##### ENCOUNTER DESIGN
+        add the bones for encounters
+            make player/GM/Mainscreen views for verbal NPC interactions
+            make player/GM/Mainscreen views for environment interactions
+            make player/GM/Mainscreen views for combat interactions
+        add functionality to encounters
+            flesh out details for each encounter so they affect player conditions
