@@ -1,0 +1,8 @@
+sword 
+shortsword
+hammer
+spear
+shield
+bow
+arrows
+armor

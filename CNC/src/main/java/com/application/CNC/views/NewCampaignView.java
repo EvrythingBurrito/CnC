@@ -5,6 +5,7 @@ import org.hibernate.event.spi.DeleteEvent;
 import com.application.CNC.views.GMMainView;
 import com.application.CNC.data.Item;
 import com.application.CNC.data.Player;
+import com.application.CNC.data.Campaign;
 import com.application.CNC.services.GameService;
 import com.application.CNC.data.Background;
 
@@ -36,65 +37,49 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
-
 
 @PermitAll
-@Route(value = "newPlayerView")
-@PageTitle("Create New Player")
-public class NewPlayerView extends VerticalLayout {
-    
+@Route(value = "newCampaign") // <1>
+@PageTitle("New Campaign")
+public class NewCampaignView extends VerticalLayout {
     private final GameService gameService;
     private TextField nameField = new TextField();
-    private ComboBox<Background> backgroundBox = new ComboBox<>("Background:");
-    private ComboBox<Integer> levelBox = new ComboBox<>("Level:");
     private Button finishButton = new Button("create!");
 
-    public NewPlayerView(GameService gameService) {
+    public NewCampaignView(GameService gameService) { // <2>
         this.gameService = gameService;
-        addClassName("NewPlayerView");
+        addClassName("LoginView");
         setSizeFull();
-        configComponents();
+
+        // initialize game item lists
+        gameService.initializeItemsFromFile("data/weapons.txt");
+        gameService.initializeItemsFromFile("data/apparel.txt");
+        // gameService.initializeItemsFromFile("data/custom_items.txt");
+
         add(nameField);
-        add(new HorizontalLayout(levelBox, backgroundBox));
         add(finishButton);
+        configComponents();
         //<theme-editor-local-classname>
-        addClassName("new-player-view-vertical-layout-1");
+        // addClassName("new-player-view-vertical-layout-1");
     }
 
     private void configComponents() {
-        nameField.setLabel("Player Name:");
+        nameField.setLabel("Campaign Name:");
         nameField.setClearButtonVisible(true);
         nameField.setPrefixComponent(VaadinIcon.BOOK.create());
-        backgroundBox.setItems(EnumSet.allOf(Background.class));
-        levelBox.setItems(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9)));
         finishButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         finishButton.addClickShortcut(Key.ENTER);
         finishButton.addClickListener(event -> {
-            addPlayer();
+            addCampaign();
             finishButton.getUI().ifPresent(ui -> 
-                ui.navigate(CampaignView.class));
+                ui.navigate(MainMenuView.class));
         });
     }
 
-    private void addPlayer() {
-        Player newplayer = new Player();
-        newplayer.setName(nameField.getValue());
-        newplayer.setBackground(backgroundBox.getValue());
-        newplayer.setLevel(levelBox.getValue());
-        newplayer.setInventory(getInitialInventory(newplayer.getBackground()));
-        gameService.createPlayer(newplayer);
+    private void addCampaign() {
+        Campaign newCampaign = new Campaign();
+        newCampaign.setName(nameField.getValue());
+        gameService.createCampaign(newCampaign);
     }
 
-    private List<Long> getInitialInventory(Background background) {
-        switch (background) {
-            case Blacksmith:
-                return gameService.findItemIDsByNames(Arrays.asList("hammer", "apron"));
-            case Actor:
-                return gameService.findItemIDsByNames(Arrays.asList("dagger", "shirt"));
-            default:
-                return null;
-        }
-    }
 }

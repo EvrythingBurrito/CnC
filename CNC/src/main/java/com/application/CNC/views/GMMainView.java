@@ -2,9 +2,9 @@ package com.application.CNC.views;
 
 import org.hibernate.event.spi.DeleteEvent;
 
-import com.application.CNC.services.gameService;
+import com.application.CNC.services.GameService;
 
-import com.application.CNC.services.gameService;
+import com.application.CNC.services.GameService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -22,13 +22,13 @@ import jakarta.annotation.security.PermitAll;
 @PermitAll
 @Route(value = "GM_Main")
 @PageTitle("GM Main Screen")
-public class GM_MainView extends VerticalLayout {
+public class GMMainView extends VerticalLayout {
     
-    private final gameService service;
+    private final GameService gameService;
 
-    public GM_MainView(gameService service) { // <2>
-        this.service = service;
-        addClassName("GM_MainView");
+    public GMMainView(GameService gameService) { // <2>
+        this.gameService = gameService;
+        addClassName("GMMainView");
         setSizeFull();
     }
 }

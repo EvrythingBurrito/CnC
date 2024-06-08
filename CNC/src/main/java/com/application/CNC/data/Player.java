@@ -3,20 +3,27 @@ package com.application.CNC.data;
 import com.application.CNC.data.Item;
 import com.application.CNC.data.Background;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.List;
+
+import java.util.Set;
+// import org.hibernate.collection.spi.PersistentSet;
 
 @Entity
 public class Player extends AbstractEntity {
     @NotBlank
     private String name;
+    // @Enumerated(EnumType.STRING)
     private Background background;
     private Integer level;
     // private Stats stats;
-    @OneToMany
-    private ArrayList<Item> inventory;
+    // items are saved by ID
+    private List<Long> inventory;
 
     // GETTERS/SETTERS
     public String getName() {
@@ -44,14 +51,20 @@ public class Player extends AbstractEntity {
     // INVENTORY STUFF
 
     // Fixme - this may cause error if Item is not implemented as Serializable
-    public ArrayList<Item> getInventory() {
+    public List<Long> getInventory() {
         return inventory;
     }
-    public void addToInventory(Item newItem) {
-        this.inventory.add(newItem);
+
+    public void setInventory(List<Long> anInventory) {
+        this.inventory = anInventory;
     }
-    public boolean removeFromInventory(Item anItem) {
-        if (this.inventory.indexOf(anItem) != -1) {
+
+    public boolean addToInventory(Long newItem) {
+        return this.inventory.add(newItem);
+    }
+
+    public boolean removeFromInventory(Long anItem) {
+        if (this.inventory.contains(anItem)) {
             this.inventory.remove(anItem);
             return true;
         } else {
